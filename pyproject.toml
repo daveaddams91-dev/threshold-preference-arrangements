@@ -9,7 +9,7 @@ description = "Exact chamber counts for tolerance-based distance orderings of po
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-authors = [{ name = "daveaddams91-dev" }]
+authors = [{ name = "rajveersinh-is-dev" }]
 keywords = [
     "arrangements",
     "hyperbola",
@@ -33,8 +33,8 @@ experiments = ["numpy>=1.24", "scipy>=1.10", "matplotlib>=3.7"]
 dev = ["pytest>=7.0"]
 
 [project.urls]
-Homepage = "https://github.com/daveaddams91-dev/threshold-preference-arrangements"
-Repository = "https://github.com/daveaddams91-dev/threshold-preference-arrangements"
+Homepage = "https://github.com/rajveersinh-is-dev/threshold-preference-arrangements"
+Repository = "https://github.com/rajveersinh-is-dev/threshold-preference-arrangements"
 
 [tool.setuptools.packages.find]
 where = ["src"]

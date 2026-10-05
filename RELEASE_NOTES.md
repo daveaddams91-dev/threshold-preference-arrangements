@@ -90,7 +90,7 @@ The core needs only the Python standard library.
 ## Reproduce
 
 ```bash
-git clone https://github.com/daveaddams91-dev/threshold-preference-arrangements
+git clone https://github.com/rajveersinh-is-dev/threshold-preference-arrangements
 cd threshold-preference-arrangements
 pip install -e ".[experiments]"
 python experiments/run_all.py

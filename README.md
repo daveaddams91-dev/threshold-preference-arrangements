@@ -43,7 +43,7 @@ not find a prior result establishing the formula. See `paper/main.pdf`.
 ## Install
 
 ```bash
-git clone https://github.com/daveaddams91-dev/threshold-preference-arrangements
+git clone https://github.com/rajveersinh-is-dev/threshold-preference-arrangements
 cd threshold-preference-arrangements
 pip install -e .              # core needs only the standard library
 pip install -e ".[experiments]"   # adds numpy, scipy, matplotlib
