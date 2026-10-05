@@ -1,0 +1,25 @@
+n=2 (two candidates)
+------------------------------------------------------------
+  delta=1/10: curves=1, regions=3, ceiling=3
+  delta=1/2: curves=1, regions=3, ceiling=3
+  delta=4: curves=1, regions=3, ceiling=3
+  delta=5: curves=1, regions=3, ceiling=3
+  delta=6: curves=0, regions=1, ceiling=3
+
+n=3 (three candidates)
+------------------------------------------------------------
+  delta=1/10: curves=3, pair intersections=12, regions=19, ceiling=19
+  delta=1/2: curves=3, pair intersections=12, regions=19, ceiling=19
+  delta=1: curves=3, pair intersections=12, regions=19, ceiling=19
+  delta=3: curves=3, pair intersections=10, regions=17, ceiling=19
+  delta=5: curves=3, pair intersections=6, regions=13, ceiling=19
+  delta=7: curves=0, pair intersections=0, regions=1, ceiling=19
+  delta=8: curves=0, pair intersections=0, regions=1, ceiling=19
+
+classical delta=0 baseline (Good-Tideman, plane):
+  n=2: 2 regions
+  n=3: 6 regions
+  n=4: 18 regions
+  n=5: 46 regions
+  n=6: 101 regions
+  n=7: 197 regions
