@@ -131,9 +131,18 @@ def gamma_nonempty(qi: Point, qj: Point, delta: F) -> bool:
 def gamma_conic(qi: Point, qj: Point, delta: F) -> Conic | None:
     """Implicit conic of ``H_ij``; ``None`` when the curve is empty.
 
-    For ``delta = |Q_i Q_j|`` the conic degenerates to a double line, which is
-    the correct limiting locus (a ray), so callers wanting a non-degenerate
-    curve should require ``delta < |Q_i Q_j|``.
+    **The conic equation is faithful to the metric locus only when
+    ``delta < |Q_i Q_j|``, and callers must enforce this.**  For
+    ``0 < delta < |Q_i Q_j|`` the conic is a genuine hyperbola with foci
+    ``Q_i, Q_j`` and is exactly ``{X : |d(X,Q_i) - d(X,Q_j)| = delta}``.
+
+    At the endpoint ``delta = |Q_i Q_j|`` the metric locus is, by the equality
+    case of the reverse triangle inequality, only the two rays of the line
+    ``Q_iQ_j`` *outside* the segment; but substituting ``delta^2 = L`` into the
+    equation below collapses it to ``t = 0``, the whole focal line counted
+    twice.  The returned conic therefore *over*-approximates the true
+    indifference set at that single value, and the discrepancy is not numerical.
+    For ``delta > |Q_i Q_j|`` the locus is empty and ``None`` is returned.
     """
     delta = F(delta)
     L = dist2(qi, qj)
