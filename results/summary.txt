@@ -1,5 +1,5 @@
-n=2: curves=1, Bézout ceiling=3, max regions found=3, attained at delta=1/5 with 0 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 8 trials in 0.0s
-n=3: curves=3, Bézout ceiling=19, max regions found=19, attained at delta=3/4 with 12 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 8 trials in 111.2s
-n=4: curves=6, Bézout ceiling=73, max regions found=73, attained at delta=1/20 with 60 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 8 trials in 10.4s
-n=5: curves=10, Bézout ceiling=201, max regions found=201, attained at delta=1/20 with 180 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 8 trials in 150.3s
-n=6: curves=15, Bézout ceiling=451, max regions found=451, attained at delta=1/5 with 420 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 8 trials in 88.0s
+n=2: curves=1, Bézout ceiling=3, max regions found=3, attained at delta=1/5 with 0 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 12 trials in 0.0s
+n=3: curves=3, Bézout ceiling=19, max regions found=19, attained at delta=1 with 12 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 12 trials in 3.6s
+n=4: curves=6, Bézout ceiling=73, max regions found=73, attained at delta=3/4 with 60 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 12 trials in 15.3s
+n=5: curves=10, Bézout ceiling=201, max regions found=201, attained at delta=3/4 with 180 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 12 trials in 58.5s
+n=6: curves=15, Bézout ceiling=451, max regions found=451, attained at delta=1/20 with 420 pairwise intersections and 0 pairs below 4; ratio to ceiling=1.0000; 12 trials in 391.7s
