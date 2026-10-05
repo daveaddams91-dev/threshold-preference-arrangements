@@ -4,3 +4,13 @@
 build/
 dist/
 *.egg-info/
+
+# paper build intermediates
+paper/main.aux
+paper/main.log
+paper/main.out
+paper/main.xdv
+paper/fix_macros.py
+paper/depth.py
+paper/check_math.py
+
