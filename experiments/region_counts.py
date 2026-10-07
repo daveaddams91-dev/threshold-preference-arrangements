@@ -26,19 +26,21 @@ Run:  python experiments/region_counts.py [--trials N] [--seed S]
 """
 from __future__ import annotations
 
-import argparse
-import itertools
-import random
-import sys
-import time
 from fractions import Fraction as F
 from pathlib import Path
+import argparse
+import itertools
+import sys
+import time
+
+from tolprefs import arrangement as A  # noqa: E402
+from tolprefs import conics as C  # noqa: E402
+import random
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from tolprefs import arrangement as A  # noqa: E402
-from tolprefs import conics as C  # noqa: E402
 
 DELTAS = [F(1, 20), F(1, 10), F(1, 5), F(1, 4), F(1, 3), F(1, 2), F(3, 4),
           F(1), F(5, 4), F(3, 2), F(2), F(5, 2), F(3), F(4), F(5), F(6),
@@ -90,7 +92,7 @@ def random_config(rng, n, span=9):
     raise RuntimeError(f"no generic configuration found for n={n}")
 
 
-def point_curve_intersections(pts, delta):
+def point_curve_intersections(pts, delta) -> tuple:
     """Sum of pairwise intersection counts, and the pairs that fall short of 4.
 
     Returns ``(total, sub_pairs)`` where ``sub_pairs`` lists
@@ -112,6 +114,12 @@ def point_curve_intersections(pts, delta):
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        int: Result of type int
+    
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("--trials", type=int, default=60,
                     help="random configurations per n")

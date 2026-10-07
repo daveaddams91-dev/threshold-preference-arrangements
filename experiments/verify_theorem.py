@@ -23,18 +23,20 @@ Run:  python experiments/verify_theorem.py
 """
 from __future__ import annotations
 
-import itertools
-import math
-import random
-import sys
 from fractions import Fraction as F
 from pathlib import Path
+import itertools
+import math
+import sys
+
+from tolprefs import arrangement as A  # noqa: E402
+from tolprefs import conics as C  # noqa: E402
+import random
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from tolprefs import arrangement as A  # noqa: E402
-from tolprefs import conics as C  # noqa: E402
 
 DELTAS = [F(1, 200), F(1, 100), F(1, 50), F(1, 20), F(1, 10), F(1, 5)]
 
@@ -48,11 +50,29 @@ def formula(n: int) -> int:
 
 
 def bezout(n: int) -> int:
+    """Bezout.
+    
+    Args:
+        n:
+    
+    Returns:
+        The computed result
+    
+    """
     m = n * (n - 1) // 2
     return 1 + 2 * m + 4 * (m * (m - 1) // 2)
 
 
 def generic(pts) -> bool:
+    """Generic.
+    
+    Args:
+        pts (list):
+    
+    Returns:
+        bool: Result of type bool
+    
+    """
     pts = list(pts)
     n = len(pts)
     for a, b, c in itertools.combinations(range(n), 3):
@@ -76,6 +96,15 @@ def generic(pts) -> bool:
 
 
 def check_formula(verbose=True) -> bool:
+    """Check whether formula.
+    
+    Args:
+        verbose (bool):
+    
+    Returns:
+        The computed result
+    
+    """
     ok = True
     lines = []
     for n in range(2, 6):
@@ -167,6 +196,12 @@ def check_profiles(n=4, delta=F(1, 5), span=26.0, grid=181,
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        The computed result
+    
+    """
     ok = check_formula()
     print()
     ok = check_profiles() and ok

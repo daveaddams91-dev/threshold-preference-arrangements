@@ -59,9 +59,10 @@ is always decidable in exact rational arithmetic -- no minimal polynomial of
 
 from __future__ import annotations
 
+from . import poly as P
 from fractions import Fraction as F
 
-from . import poly as P
+
 
 Point = tuple[F, F]
 Conic = tuple[F, F, F, F, F, F]
@@ -91,32 +92,103 @@ __all__ = [
 
 
 # ------------------------------------------------------------- basics
+
+
 def as_point(p) -> Point:
+    """As point.
+    
+    Args:
+        p:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     return (F(p[0]), F(p[1]))
 
 
 def add(p: Point, q: Point) -> Point:
+    """Add.
+    
+    Args:
+        p:
+        q:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     return (p[0] + q[0], p[1] + q[1])
 
 
 def sub(p: Point, q: Point) -> Point:
+    """Sub.
+    
+    Args:
+        p:
+        q:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     return (p[0] - q[0], p[1] - q[1])
 
 
 def dot(p: Point, q: Point) -> F:
+    """Dot.
+    
+    Args:
+        p:
+        q:
+    
+    Returns:
+        The computed result
+    
+    """
     return p[0] * q[0] + p[1] * q[1]
 
 
 def norm2(p: Point) -> F:
+    """Norm2.
+    
+    Args:
+        p:
+    
+    Returns:
+        The computed result
+    
+    """
     return dot(p, p)
 
 
 def dist2(p: Point, q: Point) -> F:
+    """Dist2.
+    
+    Args:
+        p:
+        q:
+    
+    Returns:
+        The computed result
+    
+    """
     return norm2(sub(p, q))
 
 
 # ------------------------------------------------------------- conics
+
+
 def _normalise(c: Conic) -> Conic:
+    """Normalise.
+    
+    Args:
+        c:
+    
+    Returns:
+        The computed result
+    
+    """
     for v in c:
         if v != 0:
             return tuple(-w for w in c) if v < 0 else c  # type: ignore[return-value]
@@ -184,11 +256,32 @@ def bisector_conic(qi: Point, qj: Point) -> Conic:
 
 
 def perpendicular_bisector(qi: Point, qj: Point) -> tuple[F, F, F]:
+    """Perpendicular bisector.
+    
+    Args:
+        qi:
+        qj:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     con = bisector_conic(qi, qj)
     return (con[3], con[4], con[5])
 
 
 def circumcenter(qi: Point, qj: Point, qk: Point) -> Point | None:
+    """Circumcenter.
+    
+    Args:
+        qi:
+        qj:
+        qk:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     a, b, c = perpendicular_bisector(qi, qj)
     d, e, f = perpendicular_bisector(qi, qk)
     det = a * e - b * d
@@ -198,6 +291,18 @@ def circumcenter(qi: Point, qj: Point, qk: Point) -> Point | None:
 
 
 def bisector_crossing(qi: Point, qj: Point, qk: Point, ql: Point) -> Point | None:
+    """Bisector crossing.
+    
+    Args:
+        qi:
+        qj:
+        qk:
+        ql:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     a1, b1, c1 = perpendicular_bisector(qi, qj)
     a2, b2, c2 = perpendicular_bisector(qk, ql)
     det = a1 * b2 - b1 * a2
@@ -222,12 +327,24 @@ def triangle_areas(pts) -> list[F]:
 
 
 def conic_eval(c: Conic, p: Point) -> F:
+    """Conic eval.
+    
+    Args:
+        c:
+        p:
+    
+    Returns:
+        The computed result
+    
+    """
     A, B, C, D, E, G = c
     x, y = p
     return A * x * x + B * x * y + C * y * y + D * x + E * y + G
 
 
 # --------------------------------------------- splitting a conic in y
+
+
 def _split_in_y(c: Conic) -> tuple[P.Poly, P.Poly, P.Poly]:
     """Write ``c`` as ``A(x) y^2 + B(x) y + C(x)`` with ``A, B, C`` in ``Q[x]``.
 
@@ -273,6 +390,8 @@ def _check_const_first(coeffs: P.Poly, lead: F, lin: F, const: F,
 
 
 # ------------------------------------------------------- elimination
+
+
 def _eliminate(c1: Conic, c2: Conic) -> tuple[P.Poly, P.Poly, P.Poly] | None:
     """Eliminate ``y`` between two conics, or return ``None``.
 
@@ -317,6 +436,15 @@ def _eliminate_x(c1: Conic, c2: Conic) -> tuple[P.Poly, P.Poly, P.Poly] | None:
     """Same elimination with ``x`` and ``y`` interchanged (fallback path)."""
 
     def split_in_x(c: Conic) -> tuple[P.Poly, P.Poly, P.Poly]:
+        """Split in x.
+        
+        Args:
+            c:
+        
+        Returns:
+            tuple: Result of type tuple
+        
+        """
         A, B, C, D, E, G = c
         return ((A,), (D, B), (G, E, C))
 
@@ -351,6 +479,20 @@ class AlgebraicPoint:
 
     def __init__(self, poly, ycoeffs, interval, ypoly=None, yinterval=None,
                  x0=None, y0=None, swapped=False, solve_for_y=True):
+        """Init.
+        
+        Args:
+            poly:
+            ycoeffs:
+            interval:
+            ypoly:
+            yinterval:
+            x0:
+            y0:
+            swapped (bool):
+            solve_for_y (bool):
+        
+        """
         self.poly = poly
         self.ycoeffs = ycoeffs
         self.interval = interval
@@ -362,15 +504,36 @@ class AlgebraicPoint:
         self.solve_for_y = solve_for_y
         self.shear = F(0)
 
-    def key(self):
+    def key(self) -> tuple:
+        """Key.
+        
+        Returns:
+            tuple: Result of type tuple
+        
+        """
         return (self.poly, self.ycoeffs, self.interval, self.ypoly,
                 self.yinterval, self.x0, self.y0, self.swapped,
                 self.solve_for_y)
 
     def __eq__(self, other):
+        """Eq.
+        
+        Args:
+            other:
+        
+        Returns:
+            The computed result
+        
+        """
         return isinstance(other, AlgebraicPoint) and self.key() == other.key()
 
     def __hash__(self):
+        """Hash.
+        
+        Returns:
+            The computed result
+        
+        """
         return hash(self.key())
 
     def value(self) -> tuple[float, float]:
@@ -413,6 +576,12 @@ class AlgebraicPoint:
         return clone
 
     def __repr__(self) -> str:  # pragma: no cover
+        """Repr.
+        
+        Returns:
+            The computed result
+        
+        """
         return f"AP(x~{self.value()[0]:.6g}, y~{self.value()[1]:.6g})"
 
 
@@ -440,6 +609,18 @@ def _line_restriction(c: Conic, t: F, solve_for_y: bool) -> P.Poly:
 
 
 def _fibre_gcd(c1: Conic, c2: Conic, t: F, solve_for_y: bool) -> P.Poly:
+    """Fibre gcd.
+    
+    Args:
+        c1:
+        c2:
+        t:
+        solve_for_y:
+    
+    Returns:
+        The computed result
+    
+    """
     f1 = _line_restriction(c1, t, solve_for_y)
     f2 = _line_restriction(c2, t, solve_for_y)
     return P.p_gcd(P.p_trim(f1), P.p_trim(f2))
@@ -469,6 +650,18 @@ def _fibre(c1: Conic, c2: Conic, t: F, solve_for_y: bool = True,
 
 
 def _fibre_count(c1: Conic, c2: Conic, t: F, solve_for_y: bool = True) -> int:
+    """Fibre count.
+    
+    Args:
+        c1:
+        c2:
+        t:
+        solve_for_y (bool):
+    
+    Returns:
+        int: Result of type int
+    
+    """
     g = _fibre_gcd(c1, c2, t, solve_for_y)
     if P.p_deg(g) < 1:
         return 0
@@ -592,7 +785,6 @@ def _has_root_in(f: P.Poly, lo: F, hi: F) -> bool:
     if not (a < b):
         a, b = lo, hi
     return P._variations(chain, a) - P._variations(chain, b) >= 1
-    return sf
 
 
 def _factors_in_interval(a: P.Poly, lo: F, hi: F) -> list[P.Poly]:

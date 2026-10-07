@@ -31,21 +31,23 @@ Run:  python experiments/grid_check.py
 """
 from __future__ import annotations
 
-import itertools
-import random
-import sys
 from fractions import Fraction as F
 from pathlib import Path
+import itertools
+import sys
 
-import numpy as np
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
+from tolprefs import arrangement as A  # noqa: E402
+from tolprefs import conics as C  # noqa: E402
+import numpy as np
+import random
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from tolprefs import arrangement as A  # noqa: E402
-from tolprefs import conics as C  # noqa: E402
 
 ON_CURVE_TOL = 1e-9
 
@@ -99,7 +101,20 @@ def _g(pts, delta, X, Y):
     return np.stack(out)
 
 
-def check(n, delta, span, grid, seed):
+def check(n, delta, span, grid, seed) -> dict:
+    """Check whether the condition holds.
+    
+    Args:
+        n:
+        delta:
+        span:
+        grid:
+        seed:
+    
+    Returns:
+        dict: Result of type dict
+    
+    """
     rng = random.Random(seed)
     while True:
         pts = [(F(rng.randint(-6, 6)), F(rng.randint(-6, 6))) for _ in range(n)]
@@ -197,6 +212,12 @@ def check(n, delta, span, grid, seed):
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        The computed result
+    
+    """
     cases = [
         # n, delta, span, grid, seed -- delta large relative to the grid step so
         # that every chamber is resolved.  The box is deliberately generous: a
