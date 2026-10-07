@@ -29,7 +29,7 @@ FIGS = ROOT / "figures"
 FIGS.mkdir(exist_ok=True)
 
 
-def _grid(pts, delta, span, n=900):
+def _grid(pts, delta, span, n=900) -> tuple:
     """``Z(x, y) = min over pairs of | |d_i - d_j| - delta |`` on a grid.
 
     Zero level sets of ``Z`` are exactly the indifference curves.  Coordinates
@@ -51,6 +51,18 @@ def _grid(pts, delta, span, n=900):
 
 
 def fig_arrangement(pts, delta, title, fname, span=13.0, n=900, ncurves=None):
+    """Fig arrangement.
+    
+    Args:
+        pts:
+        delta:
+        title:
+        fname:
+        span (float):
+        n (int):
+        ncurves:
+    
+    """
     axis, X, Y, Z = _grid(pts, float(delta), span, n)
     stats = A.arrangement_stats(pts, F(str(delta)))
     fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.4))
@@ -97,16 +109,37 @@ def fig_arrangement(pts, delta, title, fname, span=13.0, n=900, ncurves=None):
 
 
 def stats_pair(pts, k):
+    """Stats pair.
+    
+    Args:
+        pts (list):
+        k:
+    
+    Returns:
+        The computed result
+    
+    """
     import itertools
     return list(itertools.combinations(range(len(pts)), 2))[k]
 
 
 def draw_conic(ax, c, span, color, label):
+    """Draw conic.
+    
+    Args:
+        ax:
+        c:
+        span:
+        color:
+        label:
+    
+    """
     if c is None:
         return
     Aq, Bq, Cq, Dq, Eq, Gq = [float(v) for v in c]
     xs = np.linspace(-span, span, 1200)
-    for quad, lin, const in ((Cq, lambda x: Bq * x + Eq,
+    for quad, lin, const in ((Cq, lambda x:
+        Bq * x + Eq,
                               lambda x: Aq * x * x + Dq * x + Gq),
                              (Aq, lambda x: Dq + Bq * x,
                               lambda x: Cq * x * x + Eq * x + Gq)):
@@ -204,6 +237,12 @@ def fig_delta_sweep():
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        int: Result of type int
+    
+    """
     pts4 = [(F(0), F(0)), (F(5), F(1)), (F(1), F(6)), (F(6), F(4))]
     fig_arrangement(pts4[:3], 0.5,
                     "$n=3$: the Bezout ceiling is saturated",
