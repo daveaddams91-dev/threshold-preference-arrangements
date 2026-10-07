@@ -48,12 +48,12 @@ curved, "second-level" analogue that Zaslavsky identified as an open problem.
 
 from __future__ import annotations
 
-import itertools
+from . import conics as C
 from dataclasses import dataclass, field
 from fractions import Fraction as F
+import itertools
 
-from . import conics as C
-from . import poly as P
+
 
 __all__ = [
     "CurvePair",
