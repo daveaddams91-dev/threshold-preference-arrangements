@@ -8,10 +8,11 @@ Run:  python experiments/run_all.py
 """
 from __future__ import annotations
 
+from pathlib import Path
 import subprocess
 import sys
 import time
-from pathlib import Path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,6 +31,12 @@ STAGES = [
 
 
 def main() -> int:
+    """Entry point — parse arguments and run the main computation.
+    
+    Returns:
+        int: Result of type int
+    
+    """
     failures = []
     for name, cmd in STAGES:
         print("=" * 78)
