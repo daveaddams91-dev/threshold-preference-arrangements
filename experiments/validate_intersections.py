@@ -22,16 +22,18 @@ Run:  python experiments/validate_intersections.py
 """
 from __future__ import annotations
 
-import itertools
-import math
-import random
-import sys
 from fractions import Fraction as F
 from pathlib import Path
+import itertools
+import math
+import sys
+
+from tolprefs import conics as C
+import random
+
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from tolprefs import conics as C
 
 
 def _f(p, a, b, delta):
@@ -41,17 +43,37 @@ def _f(p, a, b, delta):
     return (abs(da - db) - delta) * (da + db)  # = da^2 - db^2 - delta(da+db)
 
 
-def numeric_count(pts, e1, e2, delta, seed=0, starts=400, span=14.0):
+def numeric_count(pts, e1, e2, delta, seed=0, starts=400, span=14.0) -> tuple:
     """Distinct real solutions of both metric conditions, by multistart Newton."""
     A, B = pts[e1[0]], pts[e1[1]]
     Cc, D = pts[e2[0]], pts[e2[1]]
     rng = random.Random(seed)
     h = 1e-7
 
-    def g(x, y):
+    def g(x, y) -> tuple:
+        """G.
+        
+        Args:
+            x:
+            y:
+        
+        Returns:
+            tuple: Result of type tuple
+        
+        """
         return (_f((x, y), A, B, delta), _f((x, y), Cc, D, delta))
 
-    def jac(x, y):
+    def jac(x, y) -> tuple:
+        """Jac.
+        
+        Args:
+            x:
+            y:
+        
+        Returns:
+            tuple: Result of type tuple
+        
+        """
         j11 = (g(x + h, y)[0] - g(x - h, y)[0]) / (2 * h)
         j12 = (g(x, y + h)[0] - g(x, y - h)[0]) / (2 * h)
         j21 = (g(x + h, y)[1] - g(x - h, y)[1]) / (2 * h)
@@ -89,6 +111,16 @@ def numeric_count(pts, e1, e2, delta, seed=0, starts=400, span=14.0):
 
 
 def main(trials=40, seed=20240):
+    """Entry point — parse arguments and run the main computation.
+    
+    Args:
+        trials (int):
+        seed (int):
+    
+    Returns:
+        The computed result
+    
+    """
     random.seed(seed)
     pairs = 0
     spurious = 0
